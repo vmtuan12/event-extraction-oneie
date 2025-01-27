@@ -6,6 +6,7 @@ from transformers import (BertModel, RobertaModel, XLMRobertaModel,
 from .graph import Graph
 from .global_feature import generate_global_feature_vector, generate_global_feature_maps
 from .util import normalize_score
+import numpy as np
 
 
 def log_sum_exp(tensor, dim=0, keepdim: bool = False):
@@ -536,7 +537,6 @@ class OneIE(nn.Module):
         if self.use_extra_bert:
             self.bert_dim *= 2
             
-        self.bert = AutoModel.from_pretrained("vinai/phobert-base-v2")
 
         self.bert_dropout = nn.Dropout(p=config.bert_dropout)
         self.multi_piece = config.multi_piece_strategy
@@ -610,26 +610,9 @@ class OneIE(nn.Module):
         :param cache_dir (str): path to the BERT cache directory
         """
         print('Loading pre-trained BERT model {}'.format(name))
-        if name.startswith('bert-'):
-            self.bert = BertModel.from_pretrained(name,
+        self.bert = AutoModel.from_pretrained("vinai/phobert-large",
                                                 cache_dir=cache_dir,
                                                 output_hidden_states=True)
-
-        elif name.startswith('roberta-'):
-            self.bert =  RobertaModel.from_pretrained(name,
-                                                 cache_dir=cache_dir,
-                                                 output_hidden_states=True)
-        elif name.startswith('xlm-roberta-'):
-            self.bert =  XLMRobertaModel.from_pretrained(name,
-                                                    cache_dir=cache_dir,
-                                                    output_hidden_states=True)
-        elif name.startswith('albert-'):
-            # "albert-xlarge-v2"
-            self.bert = AlbertModel.from_pretrained(name,
-                                                cache_dir=cache_dir,
-                                                output_hidden_states=True)
-        else:
-            raise ValueError('Unknown model: {}'.format(name))
 
     def encode(self, piece_idxs, attention_masks, token_lens):
         """Encode input sequences with BERT
@@ -741,6 +724,8 @@ class OneIE(nn.Module):
             # entity type indices -> one hot
             entity_types = batch.entity_type_idxs.view(batch_size, -1)
             entity_types = torch.clamp(entity_types, min=0)
+
+            # print("---\nentity_types\n", entity_types)
             entity_types_onehot = bert_outputs.new_zeros(*entity_types.size(),
                                                           self.entity_type_num)
             entity_types_onehot.scatter_(2, entity_types.unsqueeze(-1), 1)
@@ -810,6 +795,7 @@ class OneIE(nn.Module):
                                                                batch.token_nums)
         _, trigger_label_preds = self.trigger_crf.viterbi_decode(trigger_label_scores,
                                                                  batch.token_nums)
+
         entities = tag_paths_to_spans(entity_label_preds,
                                       batch.token_nums,
                                       self.entity_label_stoi)
@@ -885,6 +871,7 @@ class OneIE(nn.Module):
 
         global_vectors = [generate_global_feature_vector(g, self.global_feature_maps, features=self.global_features)
                           for g in graphs]
+        global_vectors = np.array(global_vectors)
         global_vectors = entity_scores.new_tensor(global_vectors)
         global_weights = self.global_feature_weights.unsqueeze(0).expand_as(global_vectors)
         global_score = (global_vectors * global_weights).sum(1)
