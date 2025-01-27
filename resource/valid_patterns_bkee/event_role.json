@@ -1,0 +1,168 @@
+{
+  "Transport": [
+    "Vehicle",
+    "Artifact",
+    "Agent",
+    "Origin",
+    "Destination"
+  ],
+  "Elect": [
+    "Place",
+    "Person",
+    "Entity"
+  ],
+  "Start-position": [
+    "Place",
+    "Person",
+    "Entity"
+  ],
+  "Nominate": [
+    "Agent",
+    "Person"
+  ],
+  "End-position": [
+    "Place",
+    "Person",
+    "Entity"
+  ],
+  "Attack": [
+    "Target",
+    "Place",
+    "Victim",
+    "Instrument",
+    "Attacker"
+  ],
+  "Meet": [
+    "Place",
+    "Entity"
+  ],
+  "Marry": [
+    "Place",
+    "Person"
+  ],
+  "Transfer-money": [
+    "Giver",
+    "Place",
+    "Recipient",
+    "Beneficiary"
+  ],
+  "Demonstrate": [
+    "Place",
+    "Entity"
+  ],
+  "End-org": [
+    "Place",
+    "Org"
+  ],
+  "Sue": [
+    "Defendant",
+    "Plaintiff",
+    "Adjudicator",
+    "Place"
+  ],
+  "Injure": [
+    "Agent",
+    "Place",
+    "Victim",
+    "Instrument"
+  ],
+  "Die": [
+    "Person",
+    "Agent",
+    "Place",
+    "Victim",
+    "Instrument"
+  ],
+  "Arrest-jail": [
+    "Agent",
+    "Place",
+    "Person"
+  ],
+  "Phone-write": [
+    "Place",
+    "Entity"
+  ],
+  "Transfer-ownership": [
+    "Artifact",
+    "Beneficiary",
+    "Buyer",
+    "Place",
+    "Seller"
+  ],
+  "Start-org": [
+    "Agent",
+    "Place",
+    "Org"
+  ],
+  "Execute": [
+    "Agent",
+    "Place",
+    "Person"
+  ],
+  "Trial-hearing": [
+    "Prosecutor",
+    "Defendant",
+    "Place",
+    "Adjudicator"
+  ],
+  "Be-born": [
+    "Place",
+    "Person"
+  ],
+  "Charge-indict": [
+    "Prosecutor",
+    "Adjudicator",
+    "Place",
+    "Defendant"
+  ],
+  "Convict": [
+    "Defendant",
+    "Place",
+    "Adjudicator"
+  ],
+  "Sentence": [
+    "Adjudicator",
+    "Place",
+    "Defendant"
+  ],
+  "Declare-bankruptcy": [
+    "Place",
+    "Org"
+  ],
+  "Release-parole": [
+    "Place",
+    "Person",
+    "Entity"
+  ],
+  "Fine": [
+    "Adjudicator",
+    "Place",
+    "Entity"
+  ],
+  "Pardon": [
+    "Adjudicator",
+    "Place",
+    "Defendant"
+  ],
+  "Appeal": [
+    "Adjudicator",
+    "Plaintiff",
+    "Place"
+  ],
+  "Extradite": [
+    "Agent",
+    "Origin",
+    "Destination"
+  ],
+  "Divorce": [
+    "Place",
+    "Person"
+  ],
+  "Merge-org": [
+    "Org"
+  ],
+  "Acquit": [
+    "Defendant",
+    "Adjudicator"
+  ]
+}

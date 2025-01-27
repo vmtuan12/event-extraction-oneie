@@ -2,5 +2,5 @@ bert/
 output/*/
 runs/
 __pycache__/
-test*
+tests*
 *.ipynb
